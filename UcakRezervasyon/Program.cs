@@ -12,5 +12,5 @@ User yenikullanici = new User
 };
 
 Console.WriteLine($"yeni kullanici id:{yenikullanici.Id},username: {yenikullanici.UserName},name:{yenikullanici.Name}");
-
+Console.WriteLine($"Test Bitti!");
 Console.ReadLine();
