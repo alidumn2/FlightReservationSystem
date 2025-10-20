@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36518.9 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UcakRezervasyon.Core", "UcakRezervasyon.Core\UcakRezervasyon.Core.csproj", "{BB2D6B93-17B3-469F-9334-58DACB37F81C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UcusRezervasyon.ConsoleUI", "UcakRezervasyon\UcusRezervasyon.ConsoleUI.csproj", "{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB2D6B93-17B3-469F-9334-58DACB37F81C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2D6B93-17B3-469F-9334-58DACB37F81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2D6B93-17B3-469F-9334-58DACB37F81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2D6B93-17B3-469F-9334-58DACB37F81C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5610D3E6-A307-4365-8996-83138B4DBE43}
+	EndGlobalSection
+EndGlobal
