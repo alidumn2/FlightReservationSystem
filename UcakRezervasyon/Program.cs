@@ -1,16 +1,42 @@
 ﻿using UcakRezervasyon.Core;
+using System;
 
-Console.WriteLine("Test Başladı!");
-
-User yenikullanici = new User
+namespace UcakRezervasyon.ConsoleUI
 {
-    Id = 1,
-    UserName = "testuser",
-    PasswordHash = "hashedpassword",
-    Name = "Test",
-    Surname = "Kullanıcı"
-};
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("--- Yeni Müşteri Kayıt Ekranı ---");
 
-Console.WriteLine($"yeni kullanici id:{yenikullanici.Id},username: {yenikullanici.UserName},name:{yenikullanici.Name}");
-Console.WriteLine($"Test Bitti!");
-Console.ReadLine();
+            // 1. Kullanıcıdan bilgileri al
+            Console.Write("Lütfen adınızı girin: ");
+            string girilenAd = Console.ReadLine();
+
+            Console.Write("Lütfen soyadınızı girin: ");
+            string girilenSoyad = Console.ReadLine();
+
+            Console.Write("Lütfen kullanıcı adınızı girin: ");
+            string girilenKullaniciAdi = Console.ReadLine();
+
+            // 2. Alınan bilgilerle yeni bir Customer nesnesi oluştur
+            User yeniMusteri = new User
+            {
+                Name = girilenAd,
+                Surname = girilenSoyad,
+                UserName = girilenKullaniciAdi
+                
+            };
+
+            
+            Console.WriteLine("\n--- Müşteri Başarıyla Oluşturuldu! ---");
+            Console.WriteLine($"Ad: {yeniMusteri.Name}");
+            Console.WriteLine($"Soyad: {yeniMusteri.Surname}");
+            Console.WriteLine($"Kullanıcı Adı: {yeniMusteri.UserName}");
+
+            
+            Console.WriteLine("\nÇıkmak için bir tuşa basın...");
+            Console.ReadKey();
+        }
+    }
+}
