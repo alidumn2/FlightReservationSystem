@@ -31,7 +31,7 @@ namespace FlightRezervation.WinFormUI
 
         }
 
-        
+
 
         private void SeedData()
         {
@@ -187,5 +187,43 @@ namespace FlightRezervation.WinFormUI
             allCustomers.Add(testCustomer);
 
         }
+        private void btnListReservations_Click(object sender, EventArgs e)
+        {
+            //var foundReservations = new List<Reservation>();
+
+            //if (selectedFlight == null)
+            //{
+            //    MessageBox.Show("Lütfen bir uçuþ seçtiðinizden emin olun!", "Hata");
+            //    return;
+            //}
+
+            //foreach(var reservations in testCustomer.Reservations)
+            //{
+            //    foundReservations.Add( reservations );
+            //}
+
+            listReservations.DataSource = null;
+            listReservations.DataSource = testCustomer.Reservations;
+        }
+
+        private void listReservations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listReservations.DataSource = null;
+            listReservations.DataSource = testCustomer.Reservations;
+
+
+        }
+
+
+        private void btnCancelReservation_Click(object sender, EventArgs e)
+        {
+            Reservation selectedreservation = listReservations.SelectedItem as Reservation;
+
+            testCustomer.CancelReservation(selectedreservation.Pnr);
+
+            listReservations.DataSource=null;
+            listReservations.DataSource= testCustomer.Reservations;
+        }
     }
+
 }

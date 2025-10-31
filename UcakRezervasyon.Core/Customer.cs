@@ -22,12 +22,12 @@ namespace UcakRezervasyon.Core
         {
             if (this.UserName == username && this.PasswordHash == password)
             {
-                return true;
+               return true;
 
             }
             else
             {
-                throw new ArgumentException("Kullanıcı adı veya şifre hatalı!");
+                return false;
 
             }
 
@@ -39,8 +39,9 @@ namespace UcakRezervasyon.Core
 
             if (seat.Status == SeatStatus.Occupied)
             {
-                throw new ArgumentException("Bu Koltuk Dolu Lütfen Başka Koltuk Seçiniz");
-               
+                
+
+
             }
 
             seat.Status = SeatStatus.Occupied;
@@ -60,8 +61,10 @@ namespace UcakRezervasyon.Core
             return newReservation;
         }
 
-        public bool CancelReservation(string pnr)
+        public void CancelReservation(string pnr)
         {
+
+            //burasının ne olduğunu sor
             var reservationToCancel = Reservations.FirstOrDefault(r => r.Pnr == pnr);
 
             if (reservationToCancel != null)
@@ -71,12 +74,12 @@ namespace UcakRezervasyon.Core
 
                 // 2. Rezervasyonu müşterinin listesinden kaldır
                 Reservations.Remove(reservationToCancel);
-                throw new ArgumentException("Rezervasyon Başarıyla silindi");
-                return true;
+                
+              
             }
 
-            throw new ArgumentException("Rezervasyon Bulunamadı!");
-            return false;
+            
+            
         }
     }
 }

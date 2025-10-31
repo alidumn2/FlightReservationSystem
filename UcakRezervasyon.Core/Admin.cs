@@ -17,7 +17,7 @@ namespace UcakRezervasyon.Core
             }
             else
             {
-                throw new ArgumentException("Kullanıcı adı veya şifre hatalı!");
+                return false;
 
             }
 

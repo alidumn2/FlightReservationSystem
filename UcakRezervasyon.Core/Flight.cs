@@ -15,7 +15,6 @@ namespace UcakRezervasyon.Core
         public string ArrivalCity { get; set; }
         public DateTime DepartureTime { get; set; }
         public Airplane Airplane { get; set; }
-
         public decimal BasePrice { get; set; }
 
         public override string ToString()
