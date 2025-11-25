@@ -1,4 +1,4 @@
-﻿namespace UcakRezervasyon.Core
+﻿namespace FlightReservation.Core
 {
     public abstract class User
     {

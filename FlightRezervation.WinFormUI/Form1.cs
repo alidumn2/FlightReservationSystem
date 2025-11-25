@@ -1,9 +1,9 @@
 
 using FlightReservation.Core;
+using FlightReservation.WinFormUI;
 using System;
 using System.Data;
 using System.Windows.Forms;
-using UcakRezervasyon.Core;
 
 
 
@@ -14,7 +14,7 @@ namespace FlightRezervation.WinFormUI
     {
 
 
-        static List<Flight> allFlights = new List<Flight>();
+        public static List<Flight> allFlights = new List<Flight>();
         static List<Customer> allCustomers = new List<Customer>();
         static List<Reservation> allReservations = new List<Reservation>();
 
@@ -189,40 +189,56 @@ namespace FlightRezervation.WinFormUI
         }
         private void btnListReservations_Click(object sender, EventArgs e)
         {
-            //var foundReservations = new List<Reservation>();
+            // 1. Form2'yi oluþtur
+            Form2 reservationsForm = new Form2(testCustomer);
 
-            //if (selectedFlight == null)
-            //{
-            //    MessageBox.Show("Lütfen bir uçuþ seçtiðinizden emin olun!", "Hata");
-            //    return;
-            //}
+            // 2. Form2'nin "FormClosed" (kapatýldýðýnda) event'ine abone ol.
+            //    Form2 kapandýðýnda, 'reservationsForm_FormClosed' metodu çalýþacak.
+            reservationsForm.FormClosed += reservationsForm_FormClosed;
 
-            //foreach(var reservations in testCustomer.Reservations)
-            //{
-            //    foundReservations.Add( reservations );
-            //}
+            // 3. Form2'yi göster (ShowDialog DEÐÝL, sadece Show)
+            reservationsForm.Show();
 
-            listReservations.DataSource = null;
-            listReservations.DataSource = testCustomer.Reservations;
+            reservationsForm.StartPosition = FormStartPosition.Manual;
+            reservationsForm.Location = this.Location;
+
+            // 4. Bu formu (Form1) gizle
+            this.Hide();
         }
 
-        private void listReservations_SelectedIndexChanged(object sender, EventArgs e)
+        private void reservationsForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            listReservations.DataSource = null;
-            listReservations.DataSource = testCustomer.Reservations;
+            // 1. Form2 kapandýðý için, bu formu (Form1) tekrar göster
+            this.Show();
 
-
+            // 2. Form2'de bir iptal yapýlmýþ olabilir.
+            //    Form1'deki koltuk listesini yenile.
+            listFlights_SelectedIndexChanged(null, null);
         }
 
-
-        private void btnCancelReservation_Click(object sender, EventArgs e)
+        private void flightManagement_Click(object sender, EventArgs e)
         {
-            Reservation selectedreservation = listReservations.SelectedItem as Reservation;
+            Form3 flightsForm = new Form3(testCustomer);
+            flightsForm.FormClosed += flightsForm_FormClosed;
 
-            testCustomer.CancelReservation(selectedreservation.Pnr);
+            // 3. Form3'yi göster (ShowDialog DEÐÝL, sadece Show)
+            flightsForm.Show();
 
-            listReservations.DataSource=null;
-            listReservations.DataSource= testCustomer.Reservations;
+            flightsForm.StartPosition = FormStartPosition.Manual;
+            flightsForm.Location = this.Location;
+
+            // 4. Bu formu (Form1) gizle
+            this.Hide();
+        }
+
+        private void flightsForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // 1. Form3 kapandýðý için, bu formu (Form1) tekrar göster
+            this.Show();
+
+            // 2. Form3'de bir iptal yapýlmýþ olabilir.
+            //    Form1'deki koltuk listesini yenile.
+            listFlights_SelectedIndexChanged(null, null);
         }
     }
 

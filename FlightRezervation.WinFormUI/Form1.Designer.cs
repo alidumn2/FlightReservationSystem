@@ -38,15 +38,14 @@
             listSeats = new ListBox();
             btnReserve = new Button();
             listFlights = new ListBox();
-            listReservations = new ListBox();
             btnListReservations = new Button();
-            btnCancelReservation = new Button();
+            flightManagement = new Button();
             SuspendLayout();
             // 
             // lblKalkis
             // 
             lblKalkis.AutoSize = true;
-            lblKalkis.Location = new Point(88, 143);
+            lblKalkis.Location = new Point(331, 50);
             lblKalkis.Name = "lblKalkis";
             lblKalkis.Size = new Size(78, 20);
             lblKalkis.TabIndex = 0;
@@ -56,7 +55,7 @@
             // lblUcuslar
             // 
             lblUcuslar.AutoSize = true;
-            lblUcuslar.Location = new Point(384, 40);
+            lblUcuslar.Location = new Point(33, 240);
             lblUcuslar.Name = "lblUcuslar";
             lblUcuslar.Size = new Size(106, 20);
             lblUcuslar.TabIndex = 1;
@@ -66,7 +65,7 @@
             // lblKoltuklar
             // 
             lblKoltuklar.AutoSize = true;
-            lblKoltuklar.Location = new Point(384, 286);
+            lblKoltuklar.Location = new Point(610, 240);
             lblKoltuklar.Name = "lblKoltuklar";
             lblKoltuklar.Size = new Size(117, 20);
             lblKoltuklar.TabIndex = 2;
@@ -74,22 +73,22 @@
             // 
             // txtDeparture
             // 
-            txtDeparture.Location = new Point(88, 166);
+            txtDeparture.Location = new Point(331, 73);
             txtDeparture.Name = "txtDeparture";
-            txtDeparture.Size = new Size(125, 27);
+            txtDeparture.Size = new Size(152, 27);
             txtDeparture.TabIndex = 3;
             txtDeparture.TextChanged += txtName_TextChanged;
             // 
             // txtArrival
             // 
-            txtArrival.Location = new Point(260, 166);
+            txtArrival.Location = new Point(557, 73);
             txtArrival.Name = "txtArrival";
-            txtArrival.Size = new Size(125, 27);
+            txtArrival.Size = new Size(160, 27);
             txtArrival.TabIndex = 4;
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(184, 223);
+            btnSearch.Location = new Point(471, 123);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(94, 29);
             btnSearch.TabIndex = 6;
@@ -100,7 +99,7 @@
             // lblVaris
             // 
             lblVaris.AutoSize = true;
-            lblVaris.Location = new Point(260, 143);
+            lblVaris.Location = new Point(557, 50);
             lblVaris.Name = "lblVaris";
             lblVaris.Size = new Size(71, 20);
             lblVaris.TabIndex = 7;
@@ -110,14 +109,14 @@
             // listSeats
             // 
             listSeats.FormattingEnabled = true;
-            listSeats.Location = new Point(510, 286);
+            listSeats.Location = new Point(610, 263);
             listSeats.Name = "listSeats";
-            listSeats.Size = new Size(180, 144);
+            listSeats.Size = new Size(325, 224);
             listSeats.TabIndex = 8;
             // 
             // btnReserve
             // 
-            btnReserve.Location = new Point(184, 358);
+            btnReserve.Location = new Point(443, 517);
             btnReserve.Name = "btnReserve";
             btnReserve.Size = new Size(149, 29);
             btnReserve.TabIndex = 9;
@@ -128,24 +127,15 @@
             // listFlights
             // 
             listFlights.FormattingEnabled = true;
-            listFlights.Location = new Point(510, 40);
+            listFlights.Location = new Point(33, 263);
             listFlights.Name = "listFlights";
-            listFlights.Size = new Size(180, 144);
+            listFlights.Size = new Size(450, 224);
             listFlights.TabIndex = 10;
             listFlights.SelectedIndexChanged += listFlights_SelectedIndexChanged;
             // 
-            // listReservations
-            // 
-            listReservations.FormattingEnabled = true;
-            listReservations.Location = new Point(748, 40);
-            listReservations.Name = "listReservations";
-            listReservations.Size = new Size(557, 244);
-            listReservations.TabIndex = 11;
-            listReservations.SelectedIndexChanged += listReservations_SelectedIndexChanged;
-            // 
             // btnListReservations
             // 
-            btnListReservations.Location = new Point(765, 307);
+            btnListReservations.Location = new Point(822, 520);
             btnListReservations.Name = "btnListReservations";
             btnListReservations.Size = new Size(178, 26);
             btnListReservations.TabIndex = 12;
@@ -153,24 +143,23 @@
             btnListReservations.UseVisualStyleBackColor = true;
             btnListReservations.Click += btnListReservations_Click;
             // 
-            // btnCancelReservation
+            // flightManagement
             // 
-            btnCancelReservation.Location = new Point(1086, 311);
-            btnCancelReservation.Name = "btnCancelReservation";
-            btnCancelReservation.Size = new Size(155, 29);
-            btnCancelReservation.TabIndex = 13;
-            btnCancelReservation.Text = "Reservasyon İptal";
-            btnCancelReservation.UseVisualStyleBackColor = true;
-            btnCancelReservation.Click += btnCancelReservation_Click;
+            flightManagement.Location = new Point(33, 517);
+            flightManagement.Name = "flightManagement";
+            flightManagement.Size = new Size(119, 29);
+            flightManagement.TabIndex = 13;
+            flightManagement.Text = "Uçuş Yönetim";
+            flightManagement.UseVisualStyleBackColor = true;
+            flightManagement.Click += flightManagement_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1383, 604);
-            Controls.Add(btnCancelReservation);
+            ClientSize = new Size(1032, 583);
+            Controls.Add(flightManagement);
             Controls.Add(btnListReservations);
-            Controls.Add(listReservations);
             Controls.Add(listFlights);
             Controls.Add(btnReserve);
             Controls.Add(listSeats);
@@ -199,9 +188,8 @@
         private Label lblVaris;
         private Button btnReserve;
         private ListBox listFlights;
-        private ListBox listReservations;
         private Button btnListReservations;
-        private Button btnCancelReservation;
         protected ListBox listSeats;
+        private Button flightManagement;
     }
 }

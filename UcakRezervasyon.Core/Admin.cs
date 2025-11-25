@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UcakRezervasyon.Core
+namespace FlightReservation.Core
 {
     public class Admin : User
     {

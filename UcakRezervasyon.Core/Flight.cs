@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UcakRezervasyon.Core
+namespace FlightReservation.Core
 {
     public class Flight
     {
@@ -19,7 +19,7 @@ namespace UcakRezervasyon.Core
 
         public override string ToString()
         {
-        return $"{FlightNumber} | {DepartureCity} -> {ArrivalCity} | {DepartureTime.ToShortDateString()}";
+        return $"{FlightNumber} | {DepartureCity} -> {ArrivalCity} | {DepartureTime.ToShortDateString()} | {BasePrice} TL";
         }
 
     }

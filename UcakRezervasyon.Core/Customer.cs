@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UcakRezervasyon.Core
+namespace FlightReservation.Core
 {
     public class Customer : User
     {
@@ -37,12 +37,6 @@ namespace UcakRezervasyon.Core
         public Reservation MakeReservation(Flight flight, Seat seat)
         {
 
-            if (seat.Status == SeatStatus.Occupied)
-            {
-                
-
-
-            }
 
             seat.Status = SeatStatus.Occupied;
 
