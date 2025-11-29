@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UcakRezervasyon.Core\FlightReservation.Core.csproj" />
+    <ProjectReference Include="..\FlightReservationSystem.Core\FlightReservation.Core.csproj" />
   </ItemGroup>
 
 </Project>
