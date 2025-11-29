@@ -50,7 +50,7 @@
             lblKalkis.Size = new Size(78, 20);
             lblKalkis.TabIndex = 0;
             lblKalkis.Text = "Kalkış Yeri:";
-            lblKalkis.Click += label1_Click;
+
             // 
             // lblUcuslar
             // 
@@ -60,7 +60,6 @@
             lblUcuslar.Size = new Size(106, 20);
             lblUcuslar.TabIndex = 1;
             lblUcuslar.Text = "Uygun Uçuşlar:";
-            lblUcuslar.Click += label2_Click;
             // 
             // lblKoltuklar
             // 
@@ -77,7 +76,6 @@
             txtDeparture.Name = "txtDeparture";
             txtDeparture.Size = new Size(152, 27);
             txtDeparture.TabIndex = 3;
-            txtDeparture.TextChanged += txtName_TextChanged;
             // 
             // txtArrival
             // 
@@ -104,7 +102,6 @@
             lblVaris.Size = new Size(71, 20);
             lblVaris.TabIndex = 7;
             lblVaris.Text = "Varış Yeri:";
-            lblVaris.Click += label4_Click;
             // 
             // listSeats
             // 

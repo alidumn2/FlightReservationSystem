@@ -22,6 +22,7 @@ namespace FlightReservation.Core
             Capacity = capacity;
             Seats = new List<Seat>();
 
+            // Kapasite kadar koltuk döngü ile oluşturulup listeye eklenir.
             for (int i = 1; i <= Capacity; i++)
             {
                 Seats.Add(new Seat { SeatNumber = i.ToString() });

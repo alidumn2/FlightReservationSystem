@@ -41,6 +41,7 @@
             txtBasePrice = new TextBox();
             listLoadFlights = new ListBox();
             btnGoBack = new Button();
+            deleteFlight = new Button();
             SuspendLayout();
             // 
             // addFlight
@@ -151,11 +152,22 @@
             btnGoBack.UseVisualStyleBackColor = true;
             btnGoBack.Click += btnGoBack_Click;
             // 
+            // deleteFlight
+            // 
+            deleteFlight.Location = new Point(677, 492);
+            deleteFlight.Name = "deleteFlight";
+            deleteFlight.Size = new Size(118, 28);
+            deleteFlight.TabIndex = 18;
+            deleteFlight.Text = "Uçuş Sil";
+            deleteFlight.UseVisualStyleBackColor = true;
+            deleteFlight.Click += deleteFlight_Click;
+            // 
             // Form3
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1032, 583);
+            Controls.Add(deleteFlight);
             Controls.Add(btnGoBack);
             Controls.Add(listLoadFlights);
             Controls.Add(txtBasePrice);
@@ -191,5 +203,6 @@
         private TextBox txtBasePrice;
         private ListBox listLoadFlights;
         private Button btnGoBack;
+        private Button deleteFlight;
     }
 }

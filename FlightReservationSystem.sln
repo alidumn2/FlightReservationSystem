@@ -5,8 +5,6 @@ VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightReservation.Core", "UcakRezervasyon.Core\FlightReservation.Core.csproj", "{BB2D6B93-17B3-469F-9334-58DACB37F81C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightReservation.ConsoleUI", "UcakRezervasyon\FlightReservation.ConsoleUI.csproj", "{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightReservation.WinFormUI", "FlightRezervation.WinFormUI\FlightReservation.WinFormUI.csproj", "{BA7F6856-E885-46EE-B365-CCC6DAAE4750}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{BB2D6B93-17B3-469F-9334-58DACB37F81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB2D6B93-17B3-469F-9334-58DACB37F81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB2D6B93-17B3-469F-9334-58DACB37F81C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FDFFCCD0-2408-4A9D-A7F4-526A3244D4BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA7F6856-E885-46EE-B365-CCC6DAAE4750}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BA7F6856-E885-46EE-B365-CCC6DAAE4750}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA7F6856-E885-46EE-B365-CCC6DAAE4750}.Release|Any CPU.ActiveCfg = Release|Any CPU

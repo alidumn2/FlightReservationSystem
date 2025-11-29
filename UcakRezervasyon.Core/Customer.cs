@@ -11,26 +11,16 @@ namespace FlightReservation.Core
     {
         public string TCKimlikNo { get; set; }
 
-        public List<Reservation> Reservations { get; private set; }
+        public List<Reservation> Reservations { get; private set; } // Müşterinin rezervasyon geçmişi
 
         public Customer()
         {
-            Reservations = new List<Reservation>();
+            Reservations = new List<Reservation>(); //Yapıcı metotla yeni müşteri oluştuğunda rezervasyon listesi oluşur
         }
 
         public override bool Login(string username, string password)
         {
-            if (this.UserName == username && this.PasswordHash == password)
-            {
-               return true;
-
-            }
-            else
-            {
-                return false;
-
-            }
-
+            return (this.UserName == username && this.Password == password);
 
         }
 
@@ -43,7 +33,9 @@ namespace FlightReservation.Core
             var newReservation = new Reservation
             {
                 Id = Reservations.Count + 1, // Bellek-içi liste için basit ID
-                Pnr = Guid.NewGuid().ToString().Substring(0, 6).ToUpper(), // Benzersiz PNR
+
+                // Benzersiz bir ID (GUID) üretir, ilk 6 karakteri alır ve büyük harfe çevirir
+                Pnr = Guid.NewGuid().ToString().Substring(0, 6).ToUpper(), 
                 ReservedFlight = flight,
                 ReservedCustomer = this,
                 SelectedSeat = seat,
@@ -52,21 +44,21 @@ namespace FlightReservation.Core
             };
 
             Reservations.Add(newReservation);
-            return newReservation;
+            return newReservation; // Oluşan rezervasyonu geri döndür (UI'da göstermek için).
         }
 
         public void CancelReservation(string pnr)
         {
 
-            //burasının ne olduğunu sor
+            // PNR koduna göre ilgili rezervasyonu listede bul
             var reservationToCancel = Reservations.FirstOrDefault(r => r.Pnr == pnr);
 
             if (reservationToCancel != null)
             {
-                // 1. Koltuğun durumunu tekrar "Boş" yap
+                // Koltuğun durumunu tekrar "Boş" yap
                 reservationToCancel.SelectedSeat.Status = SeatStatus.Available;
 
-                // 2. Rezervasyonu müşterinin listesinden kaldır
+                // Rezervasyonu müşterinin listesinden kaldır
                 Reservations.Remove(reservationToCancel);
                 
               

@@ -19,18 +19,12 @@ namespace FlightRezervation.WinFormUI
         static List<Reservation> allReservations = new List<Reservation>();
 
 
-        static Customer testCustomer;
+        static Customer testCustomer; // Giriþ ekraný olmadýðý için sahte bir kullanýcý
 
         public Form1()
         {
             InitializeComponent();
         }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
 
         private void SeedData()
@@ -66,87 +60,62 @@ namespace FlightRezervation.WinFormUI
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            // 1. Verileri al ve temizle
             string departure = txtDeparture.Text.Trim();
             string arrival = txtArrival.Text.Trim();
 
-            // 2. Boþ bir "bulunanlar" listesi oluþtur
             var foundFlights = new List<Flight>();
 
-            // 3. "allFlights" listesindeki HER BÝR uçaða tek tek bakacaðýz
             foreach (var flight in allFlights)
             {
-                // ---- BURAYA BREAKPOINT KOY! ----
-                // Koþullarý tek tek kontrol et:
-
+                // Büyük/küçük harf duyarlýlýðý olmadan (IgnoreCase) þehir kontrolü
                 bool cityMatch = flight.DepartureCity.Contains(departure, StringComparison.CurrentCultureIgnoreCase);
 
                 bool arrivalMatch = flight.ArrivalCity.Contains(arrival, StringComparison.CurrentCultureIgnoreCase);
 
+                // Tarih kontrolü: Geçmiþ tarihli uçuþlarý gösterme
                 bool timeMatch = flight.DepartureTime > DateTime.Now;
 
-                // Eðer ÜÇ KOÞUL da doðruysa, listeye ekle
                 if (cityMatch && arrivalMatch && timeMatch)
                 {
                     foundFlights.Add(flight);
                 }
-            } // Döngü burada diðer uçuþ için tekrar baþlar
+            }
 
-            // 4. Sonucu ListBox'a ata
+            // ListBox'ý temizle ve bulunanlarý ekle
             listFlights.DataSource = null;
             listFlights.DataSource = foundFlights;
         }
 
-        private void txtName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void listFlights_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 1. Arayüzden seçilen veriyi al
-            // (SelectedItem bir "object" olduðu için onu "Flight"a dönüþtürmeliyiz)
+            // ListBox'tan seçilen nesneyi 'Flight' tipine dönüþtür (Casting)
             Flight selectedFlight = listFlights.SelectedItem as Flight;
 
             if (selectedFlight == null) return; // Seçim boþsa bir þey yapma
 
-            // 2. "Mutfaðý" (Core) kullanarak iþ mantýðýný çalýþtýr
-            // Seçilen uçuþun uçaðýndaki (Airplane) müsait (Available) koltuklarý bul
+            // LINQ Sorgusu: Sadece durumu 'Available' (Boþ) olan koltuklarý getir
+            // Dolu koltuklar listede görünmeyecek
             var availableSeats = selectedFlight.Airplane.Seats
                 .Where(seat => seat.Status == SeatStatus.Available)
                 .ToList();
 
-            // 3. Sonucu Arayüzde (Koltuk Listesinde) göster
-            listSeats.DataSource = null; // Listeyi temizle
+            listSeats.DataSource = null; 
             listSeats.DataSource = availableSeats;
         }
 
         private void btnReserve_Click(object sender, EventArgs e)
         {
-            // 1. Arayüzden seçili olan verileri al
             Flight selectedFlight = listFlights.SelectedItem as Flight;
             Seat selectedSeat = listSeats.SelectedItem as Seat;
 
-            // 2. Kontrol yap
+            //Seçim kontrolü
             if (selectedFlight == null || selectedSeat == null)
             {
                 MessageBox.Show("Lütfen bir uçuþ ve koltuk seçtiðinizden emin olun!", "Hata");
                 return;
             }
 
-            // 3. "Mutfaðý" (Core) kullanarak ASIL ÝÞLEMÝ yap
-            // testCustomer'ý form yüklenirken oluþturmuþtuk.
-            // Core'daki Customer sýnýfýnýn metodunu çaðýrýyoruz:
+            // Core katmanýndaki 'Customer' sýnýfýnýn metodunu çaðýrarak iþi bitir
             Reservation newReservation = testCustomer.MakeReservation(selectedFlight, selectedSeat);
 
             // 4. Sonucu Arayüzde (MessageBox) göster
@@ -161,10 +130,7 @@ namespace FlightRezervation.WinFormUI
                     "Rezervasyon Tamamlandý"
                 );
 
-                // Arayüzü Güncelle: Koltuk listesini yenile (artýk o koltuk dolu)
-                // Bunu yapmak için listFlights_SelectedIndexChanged metodunu manuel tetikleyebiliriz
-                // veya o metodun içindeki kodu bir fonksiyona alýp çaðýrabiliriz.
-                // Þimdilik en basit yol:
+                // Listeyi yenileme (dolu olanlar gözükmeyecek)
                 listFlights_SelectedIndexChanged(sender, e);
             }
             else
@@ -173,10 +139,6 @@ namespace FlightRezervation.WinFormUI
             }
         }
 
-        private void txtUserName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void Form1_Load_1(object sender, EventArgs e)
         {

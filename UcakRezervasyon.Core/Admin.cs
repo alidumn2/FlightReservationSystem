@@ -10,19 +10,23 @@ namespace FlightReservation.Core
     {
         public override bool Login(string username, string password)
         {
-            if (this.UserName == username && this.PasswordHash == password)
-            {
-                return true;
-
-            }
-            else
-            {
-                return false;
-
-            }
-
+            return (this.UserName == username && this.Password == password);
 
         }
+
+        public void AddFlight(Flight newFlight, List<Flight> flightList)
+        {
+            flightList.Add(newFlight);
+        }
+
+        public void DeleteFlight(Flight flight, List<Flight> flightList)
+        {
+            if (flightList.Contains(flight))
+            {
+                flightList.Remove(flight);
+            }
+        }
+
     }
 
 }

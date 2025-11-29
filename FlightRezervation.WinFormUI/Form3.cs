@@ -43,6 +43,7 @@ namespace FlightReservation.WinFormUI
 
             try
             {
+                // Formdaki textbox'lardan verileri al
                 string flightnumber = txtFlightNumber.Text.Trim();
                 string departurecity = txtDepartureCity.Text.Trim();
                 string arrivalcity = txtArrivalCity.Text.Trim();
@@ -51,8 +52,10 @@ namespace FlightReservation.WinFormUI
 
                 Flight newFlight = new Flight
                 {
+                    // Her yeni uçuş için otomatik olarak 150 koltuklu bir Boeing oluşturuluyor
+                    // Airplane sınıfının constructor'ı (yapıcı metodu) 1'den 150'ye kadar koltukları otomatik üretir
                     Airplane = new Airplane("Boeing 737", 150),
-                    Id = Form1.allFlights.Count + 1,
+                    Id = Form1.allFlights.Count + 1,// Basit ID atama 
                     FlightNumber = flightnumber,
                     DepartureCity = departurecity,
                     ArrivalCity = arrivalcity,
@@ -60,18 +63,40 @@ namespace FlightReservation.WinFormUI
                     DepartureTime = departuretime,
 
                 };
-                Form1.allFlights.Add(newFlight);
+
+                // Admin sınıfının metodunu kullanarak uçuşu ekle
+                Admin currentAdmin = new Admin();
+                currentAdmin.AddFlight(newFlight, Form1.allFlights);
 
                 LoadFlights();
 
                 MessageBox.Show("Yeni uçuş başarıyla eklendi!", "Başarılı");
 
-            } 
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Hata oluştu: " + ex.Message, "Hata");
             }
         }
+
+        private void deleteFlight_Click(object sender, EventArgs e)
+        {
+
+            // Seçili uçuşu al
+            Flight selectedFlight = listLoadFlights.SelectedItem as Flight;
+            if (selectedFlight == null)
+            {
+                MessageBox.Show("Lütfen silinecek bir uçuş seçin.", "Hata");
+                return;
+            }
+            // Admin sınıfının metodunu kullanarak uçuşu sil
+            Admin currentAdmin = new Admin();
+            currentAdmin.DeleteFlight(selectedFlight, Form1.allFlights);
+            LoadFlights();
+            MessageBox.Show("Uçuş başarıyla silindi!", "Başarılı");
+
+        }
+
 
         private void Form3_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -81,7 +106,7 @@ namespace FlightReservation.WinFormUI
             }
         }
 
-       
+
 
         private void LoadFlights()
         {
@@ -94,5 +119,6 @@ namespace FlightReservation.WinFormUI
             this.IsNavigatingBack = true;
             this.Close();
         }
+
     }
 }

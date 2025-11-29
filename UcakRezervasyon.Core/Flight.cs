@@ -17,6 +17,9 @@ namespace FlightReservation.Core
         public Airplane Airplane { get; set; }
         public decimal BasePrice { get; set; }
 
+        // Object sınıfından gelen ToString() metodunu eziyoruz (override)
+        // Normalde bu metod sadece sınıfın adını (FlightReservation.Core.Flight) döndürür
+        // Biz bunu değiştirerek, arayüzdeki listelerde (ListBox) anlamlı bir uçuş özeti görünmesini sağlıyoruz
         public override string ToString()
         {
         return $"{FlightNumber} | {DepartureCity} -> {ArrivalCity} | {DepartureTime.ToShortDateString()} | {BasePrice} TL";

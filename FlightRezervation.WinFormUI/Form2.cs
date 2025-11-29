@@ -16,18 +16,16 @@ namespace FlightReservation.WinFormUI
 
         private Customer _currentCustomer;
 
-        // Bu bir bayraktır, 'static' DEĞİLDİR
+        // Bu bir kontrol bayrağıdır (Flag). 
+        // Kullanıcının "Geri Dön" butonuna basarak mı yoksa pencereyi (X) kapatarak mı çıktığını anlamamızı sağlar.
         public bool IsNavigatingBack { get; private set; } = false;
 
-        // BU BİR CONSTRUCTOR'DIR, 'static' DEĞİLDİR
         public Form2(Customer customer)
         {
             InitializeComponent();
             _currentCustomer = customer;
             LoadReservations();
 
-            // FormClosing event'ini burada koda eklemek daha garantilidir.
-            // Tasarımcıdan bağlamayı unutmuş olabilirsiniz.
             this.FormClosing += Form2_FormClosing;
         }
 
@@ -39,6 +37,7 @@ namespace FlightReservation.WinFormUI
 
         private void btnCancelReservation_Click(object sender, EventArgs e)
         {
+            //Cast işlemi
             Reservation selectedReservation = listReservations.SelectedItem as Reservation;
 
             if (selectedReservation == null)
@@ -49,16 +48,19 @@ namespace FlightReservation.WinFormUI
 
             _currentCustomer.CancelReservation(selectedReservation.Pnr);
             LoadReservations();
+            MessageBox.Show($"PNR Kodu: {selectedReservation.Pnr} olan rezervasyonunuz iptal edilmiştir.","Rezervasyon İptal İşlemi Tamamlandı");
         }
 
         private void btnGoBack_Click(object sender, EventArgs e)
         {
+            //Geri dön butonu aktif olduğundan bayrağı true yapılır
             this.IsNavigatingBack = true;
             this.Close();
         }
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Eğer kullanıcı "Geri Dön" butonuna basmadıysa (yani sağ üstteki X ile kapattıysa)
             if (!this.IsNavigatingBack)
             {
                 Application.Exit();
