@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,11 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FlightReservationSystem.Core\FlightReservation.Core.csproj" />
-    <ProjectReference Include="..\FlightReservationSystem.DataAccess\FlightReservation.DataAccess.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="bin\Debug\net9.0-windows\" />
   </ItemGroup>
 
 </Project>

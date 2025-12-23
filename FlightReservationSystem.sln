@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightReservationSystem.Core", "FlightReservationSystem.Core\FlightReservation.Core.csproj", "{BB2D6B93-17B3-469F-9334-58DACB37F81C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightReservation.Core", "FlightReservationSystem.Core\FlightReservation.Core.csproj", "{BB2D6B93-17B3-469F-9334-58DACB37F81C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightReservationSystem.WinFormUI", "FlightReservationSystem.WinFormUI\FlightReservation.WinFormUI.csproj", "{BA7F6856-E885-46EE-B365-CCC6DAAE4750}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightReservation.WinFormUI", "FlightReservationSystem.WinFormUI\FlightReservation.WinFormUI.csproj", "{BA7F6856-E885-46EE-B365-CCC6DAAE4750}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightReservation.DataAccess", "FlightReservationSystem.DataAccess\FlightReservation.DataAccess.csproj", "{4219CD9B-0396-4D9B-965C-C21189628A1B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BB2D6B93-17B3-469F-9334-58DACB37F81C} = {BB2D6B93-17B3-469F-9334-58DACB37F81C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{BA7F6856-E885-46EE-B365-CCC6DAAE4750}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA7F6856-E885-46EE-B365-CCC6DAAE4750}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA7F6856-E885-46EE-B365-CCC6DAAE4750}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4219CD9B-0396-4D9B-965C-C21189628A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4219CD9B-0396-4D9B-965C-C21189628A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4219CD9B-0396-4D9B-965C-C21189628A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4219CD9B-0396-4D9B-965C-C21189628A1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
