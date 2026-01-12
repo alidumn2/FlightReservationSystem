@@ -91,26 +91,26 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
             };
             pnlHeader.Controls.Add(btnLogout);
 
-            // 2. TAB CONTROL (Sekmeler)
+            // TAB CONTROL (Sekmeler)
             tabControl = new TabControl();
             tabControl.Dock = DockStyle.Fill;
             tabControl.Font = new Font("Segoe UI", 10);
             this.Controls.Add(tabControl);
             tabControl.BringToFront();
 
-            // SEKME 1: UÇUŞ YÖNETİMİ
+            // UÇUŞ YÖNETİMİ
             tabFlights = new TabPage("Uçuş Yönetimi");
             tabFlights.BackColor = Color.White;
             SetupFlightTab();
             tabControl.TabPages.Add(tabFlights);
 
-            // SEKME 2: UÇAK YÖNETİMİ
+            // UÇAK YÖNETİMİ
             tabPlanes = new TabPage("Uçak/Filo Yönetimi");
             tabPlanes.BackColor = Color.White;
             SetupPlaneTab();
             tabControl.TabPages.Add(tabPlanes);
 
-            // SEKME 3: RAPORLAR
+            // RAPORLAR
             tabReports = new TabPage("Raporlar ve İstatistikler");
             tabReports.BackColor = Color.White;
             SetupReportTab();
@@ -119,7 +119,7 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
 
         private void SetupFlightTab()
         {
-            // 1. ÜST PANEL (Ekleme Formu)
+            // ÜST PANEL
             Panel pnlAddFlight = new Panel
             {
                 Dock = DockStyle.Top,
@@ -194,7 +194,7 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
             btnCancelUpdate.Click += (s, e) => ResetForm(); // Formu sıfırlayan metoda gider
             pnlAddFlight.Controls.Add(btnCancelUpdate);
 
-            // 2. LİSTE (Grid)
+            // LİSTE (Grid)
             gridFlights = new DataGridView
             {
                 Dock = DockStyle.Fill,
@@ -222,7 +222,7 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
             pnlAddFlight.SendToBack();
         }
 
-        // UÇAK SEKMESİ TASARIMI
+        // UÇAK SEKMESİ
         private void SetupPlaneTab()
         {
             // Üst Panel
@@ -258,12 +258,11 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
             tabPlanes.Controls.Add(gridPlanes);
             tabPlanes.Controls.Add(pnlTop);
 
-            // BURASI ÇOK ÖNEMLİ: Paneli zemine itiyoruz
             pnlTop.SendToBack();
         }
 
 
-        // 3. RAPOR SEKMESİ TASARIMI
+        // RAPOR SEKMESİ
         private void SetupReportTab()
         {
             FlowLayoutPanel flow = new FlowLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(20) };
@@ -317,7 +316,7 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
                 })
                 .ToList();
 
-            // 1. Kalkış (Origin)
+            // Kalkış
             cmbOrigin.DataSource = airports;
             cmbOrigin.DisplayMember = "FullName";
             cmbOrigin.ValueMember = "Id";
@@ -326,7 +325,7 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
             cmbOrigin.AutoCompleteSource = AutoCompleteSource.ListItems;
             cmbOrigin.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
-            // 2. Varış (Dest)
+            // Varış
             cmbDest.BindingContext = new BindingContext();
             cmbDest.DataSource = airports;
             cmbDest.DisplayMember = "FullName";
@@ -336,7 +335,7 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
             cmbDest.AutoCompleteSource = AutoCompleteSource.ListItems;
             cmbDest.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
-            // 2. Uçuşları Yükle (Airplane Include ederek)
+            // Uçuşları Yükle
             var flights = _db.Flights
                 .Include(f => f.Airplane)
                 .Include(f => f.DepartureAirport)
@@ -354,7 +353,7 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
                 Ucak = f.Airplane != null ? f.Airplane.Model : "Yok"
             }).ToList();
 
-            // 3. Raporları Hesapla
+            // Raporları Hesapla
             lblTotalRevenue.Text = _db.Reservations.Sum(r => r.PricePaid).ToString("C2");
             lblTotalReservations.Text = _db.Reservations.Count().ToString() + " Adet";
 
@@ -382,7 +381,7 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
             gridFlights.Refresh();
         }
 
-        // --- UÇUŞ İŞLEMLERİ ---
+        // UÇUŞ İŞLEMLERİ
         private void BtnAddFlight_Click(object sender, EventArgs e)
         {
             try
@@ -399,9 +398,8 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
 
                 if (_flightIdToUpdate == 0)
                 {
-                    // --- EKLEME MODU ---
+                    // EKLEME MODU
                     Flight f = ((Admin)_currentAdmin).AddFlight(
-                        // Ortak alanları dolduran yardımcı bir metot da yazılabilir ama şimdilik elle yazalım
                         txtFlightNum.Text,
                         (int)cmbOrigin.SelectedValue,
                         (int)cmbDest.SelectedValue,
@@ -409,21 +407,20 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
                         (int)cmbPlaneSelector.SelectedValue,
                         Convert.ToDecimal(txtPrice.Text)
                         );
-                    // ID üzerinden gitmek daha güvenli
 
                     _db.Flights.Add(f);
                     MessageBox.Show("Uçuş başarıyla EKLENDİ.");
                 }
                 else
                 {
-                    // --- GÜNCELLEME MODU ---
+                    // GÜNCELLEME MODU
                     var existingFlight = _db.Flights.Find(_flightIdToUpdate);
                     if (existingFlight != null)
                     {
                         var adminUser = (Admin)_currentAdmin;
 
                         adminUser.UpdateFlight(
-                            existingFlight, // Hangi uçuş?
+                            existingFlight, // Hangi uçuş
                             txtFlightNum.Text,
                             (int)cmbOrigin.SelectedValue,
                             (int)cmbDest.SelectedValue,
@@ -461,7 +458,7 @@ namespace FlightReservation.WinFormUI.Forms.AdminForms
             }
         }
 
-        // --- UÇAK İŞLEMLERİ ---
+        // UÇAK İŞLEMLERİ
         private void BtnAddPlane_Click(object sender, EventArgs e)
         {
             try

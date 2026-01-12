@@ -68,14 +68,14 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
             // TAB CONTROL (Sekmeler)
             tabControl = new TabControl { Dock = DockStyle.Fill, Font = new Font("Segoe UI", 10) };
 
-            // SEKME 1: AKTİF
+            // AKTİF
             TabPage tabActive = new TabPage("Aktif Uçuşlar");
             tabActive.BackColor = Color.White;
             gridActive = CreateGrid(); 
             tabActive.Controls.Add(gridActive);
             tabControl.TabPages.Add(tabActive);
 
-            // SEKME 2: GEÇMİŞ
+            // GEÇMİŞ
             TabPage tabPast = new TabPage("Geçmiş Uçuşlar");
             tabPast.BackColor = Color.WhiteSmoke;
             gridPast = CreateGrid(); 

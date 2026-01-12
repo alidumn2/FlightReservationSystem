@@ -17,7 +17,7 @@ namespace FlightReservation.Core.Entities
         {
             if (this.UserName != username) return false;
 
-            ////girilen şifreyi hashliyoruz
+            // girilen şifreyi hashliyoruz
             string inputHash = SecurityHelper.HashPassword(password);
 
             // hashlenmiş şifre, veritabanındaki kayıtlı şifreyle aynı mı?
@@ -25,7 +25,7 @@ namespace FlightReservation.Core.Entities
 
         }
 
-        public Reservation MakeReservation(Flight flight, Seat seat, int currentOccupancyCount)
+        public Reservation MakeReservation(Flight flight, Seat seat, int currentOccupancyCount, string couponCode = null)
         {
 
 
@@ -33,6 +33,12 @@ namespace FlightReservation.Core.Entities
 
             // doluluk kuralını o anki doluluk sayısıyla oluşturup motora ekleriz
             calculator.AddRule(new OccupancyRule(currentOccupancyCount));
+
+            // Eğer kupon kodu girilmişse, yeni kuralı ekle
+            if (!string.IsNullOrEmpty(couponCode))
+            {
+                calculator.AddRule(new PromotionRule(couponCode));
+            }
 
             // Fiyatı Hesaplar
             decimal finalPrice = calculator.CalculateFinalPrice(flight, seat);

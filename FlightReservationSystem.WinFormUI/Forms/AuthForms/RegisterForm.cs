@@ -97,7 +97,7 @@ namespace FlightReservation.WinFormUI.Forms.AuthForms
             // Kayıt Ol Butonu
             btnRegister = new Button();
             btnRegister.Text = "KAYDI TAMAMLA";
-            btnRegister.BackColor = Color.FromArgb(46, 204, 113); // Yeşil Renk
+            btnRegister.BackColor = Color.FromArgb(46, 204, 113);
             btnRegister.ForeColor = Color.White;
             btnRegister.FlatStyle = FlatStyle.Flat;
             btnRegister.FlatAppearance.BorderSize = 0;
@@ -123,7 +123,7 @@ namespace FlightReservation.WinFormUI.Forms.AuthForms
             this.Controls.Add(btnLoginLink);
         }
 
-        // Yardımcı Metod: Label Oluşturucu
+        // Yardımcı metod label oluşturucu
         private void CreateInputLabel(string text, int x, int y)
         {
             Label lbl = new Label();
@@ -135,7 +135,7 @@ namespace FlightReservation.WinFormUI.Forms.AuthForms
             this.Controls.Add(lbl);
         }
 
-        // Yardımcı Metod: TextBox Oluşturucu
+        // Yardımcı metod textBox oluşturucu
         private TextBox CreateTextBox(int x, int y)
         {
             TextBox txt = new TextBox();
@@ -161,13 +161,15 @@ namespace FlightReservation.WinFormUI.Forms.AuthForms
                 return;
             }
 
+            // TC kimlik numarası doğrulama (11 haneli ve son hanesi çift olmalı)
             if (txtTcNo.TextLength != 11 || txtTcNo.Text.LastOrDefault() % 2 != 0)
             { 
                 MessageBox.Show("Lütfen TC kimlik numarasını doğru girin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if(txtPassword.TextLength < 8)
+            // Şifre Uzunluk Kontrolü
+            if (txtPassword.TextLength < 8)
             {
                 MessageBox.Show("Lütfen şifreyi minimum 8 haneli giriniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

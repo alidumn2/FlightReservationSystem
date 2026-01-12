@@ -161,7 +161,7 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
                 // X konumu hesapla
                 int xPos = startX + (colIndex * (seatW + gap));
 
-                // 3. koltuktan sonra (index 0,1,2 bittiğinde) koridor koy
+                // 3. koltuktan sonra koridor koy
                 if (colIndex >= 3)
                 {
                     xPos += aisleGap;
@@ -181,7 +181,7 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
                 };
 
                 // İsimlendirme (1A, 1B, 1C - 1D, 1E, 1F)
-                btnSeat.Text = GetSeatName(rowIndex, colIndex);
+                btnSeat.Text = seat.SeatNumber;
 
                 // RENKLENDİRME
                 if (seat is BusinessSeat)
@@ -212,27 +212,6 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
             }
         }
 
-        //HARFLENDİRME (GetSeatName)
-        private string GetSeatName(int rowIndex, int colIndex)
-        {
-            int rowNum = rowIndex + 1;
-            string letter = "";
-
-            switch (colIndex)
-            {
-                case 0: letter = "A"; break; 
-                case 1: letter = "B"; break; 
-                case 2: letter = "C"; break; 
-
-                case 3: letter = "D"; break; 
-                case 4: letter = "E"; break;
-                case 5: letter = "F"; break; 
-
-                default: letter = "?"; break;
-            }
-            return $"{rowNum}{letter}";
-        }
-
         private void Seat_Click(object sender, EventArgs e)
         {
             // Önceki seçimi temizle (Rengi eski haline döndür)
@@ -256,7 +235,7 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
             // Fiyat hesapla
             decimal seatPrice = SelectedSeat.CalculatePrice(_currentCalculatedPrice);
 
-            _lblInfo.Text = $"Seçilen Koltuk: {clicked.Text} ({SelectedSeat.SeatNumber}) | Tutar: {seatPrice:C2}";
+            _lblInfo.Text = $"Seçilen Koltuk: {SelectedSeat.SeatNumber} | Tutar: {seatPrice:C2}";
             _lblInfo.ForeColor = Color.Black;
             _lblInfo.Font = new Font("Segoe UI", 11, FontStyle.Bold);
         }

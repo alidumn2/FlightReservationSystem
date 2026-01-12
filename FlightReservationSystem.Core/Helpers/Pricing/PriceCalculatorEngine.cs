@@ -23,7 +23,7 @@ namespace FlightReservation.Core.Helpers.Pricing
             _rules.Add(new SeatTypeRule());
         }
 
-        // Dinamik kural eklemek için addrule metodu tanımlıyoruz (Örn: Doluluk oranı her uçuşta değişir)
+        // Dinamik kural eklemek için addrule metodu tanımlıyoruz
         public void AddRule(IPriceRule rule)
         {
             _rules.Add(rule);

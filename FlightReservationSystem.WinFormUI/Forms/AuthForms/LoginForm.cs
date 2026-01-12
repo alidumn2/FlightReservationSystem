@@ -54,7 +54,7 @@ namespace FlightReservation.WinFormUI.Forms.AuthForms
 
             // Başlık
             lblTitle = new Label();
-            lblTitle.Text = "UÇUŞ\nREZERVASYON\nSİSTEMİ";
+            lblTitle.Text = "UÇAK BİLETİ\nREZERVASYON\nSİSTEMİ";
             lblTitle.ForeColor = Color.White;
             lblTitle.Font = new Font("Segoe UI", 24, FontStyle.Bold);
             lblTitle.AutoSize = true;
@@ -67,7 +67,7 @@ namespace FlightReservation.WinFormUI.Forms.AuthForms
             lblSubtitle.ForeColor = Color.WhiteSmoke;
             lblSubtitle.Font = new Font("Segoe UI", 12, FontStyle.Regular);
             lblSubtitle.AutoSize = true;
-            lblSubtitle.Location = new Point(15, 320);
+            lblSubtitle.Location = new Point(15, 340);
             pnlLeft.Controls.Add(lblSubtitle);
 
             // KAPATMA BUTONU
@@ -151,6 +151,9 @@ namespace FlightReservation.WinFormUI.Forms.AuthForms
             btnRegister.Cursor = Cursors.Hand;
             btnRegister.Click += BtnRegister_Click;
             this.Controls.Add(btnRegister);
+
+            // Enter'a basınca giriş yap
+            this.AcceptButton = btnLogin;
         }
 
         // İŞ MANTIĞI
@@ -202,6 +205,7 @@ namespace FlightReservation.WinFormUI.Forms.AuthForms
 
         private void BtnRegister_Click(object sender, EventArgs e)
         {
+            // Kayıt formunu aç
             RegisterForm regForm = new RegisterForm();
             this.Hide();
             regForm.ShowDialog();

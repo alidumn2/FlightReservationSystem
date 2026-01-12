@@ -20,6 +20,8 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
         private Core.Entities.Customer _currentCustomer;
 
         // UI Kontrolleri
+        private Flight _selectedFlight;
+        private TextBox txtCouponCode;
         private DataGridView gridFlights;
         private ComboBox cmbOrigin, cmbDest;
         private DateTimePicker dtDate;
@@ -177,6 +179,40 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
             gridFlights.CellClick += GridFlights_CellClick; 
             this.Controls.Add(gridFlights);
             gridFlights.BringToFront();
+
+           
+            Label lblCoupon = new Label
+            {
+                Text = "Kupon Kodu:",
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                Location = new Point(582, 25),
+                AutoSize = true,
+                ForeColor = Color.DarkSlateGray
+            };
+            pnlBottom.Controls.Add(lblCoupon);
+
+            // Kupon Giriş Kutusu
+            txtCouponCode = new TextBox
+            {
+                Location = new Point(580, 50),
+                Width = 150,
+                Font = new Font("Segoe UI", 10),
+                PlaceholderText = "Örn: PROMO10"
+            };
+            pnlBottom.Controls.Add(txtCouponCode);
+
+            // Kupon Uygulama Butonu
+            Button btnApplyCoupon = new Button
+            {
+                Text = "UYGULA",
+                Location = new Point(750, 50),
+                Size = new Size(80, 30),
+                BackColor = Color.LightSeaGreen,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat
+            };
+            btnApplyCoupon.Click += BtnApplyCoupon_Click;
+            pnlBottom.Controls.Add(btnApplyCoupon);
         }
 
           // İŞ MANTIĞI
@@ -185,7 +221,7 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
         {
             base.OnLoad(e);
 
-            // HAVALİMANLARINI ÇEK VE DOLDUR 
+            // Havalimanlarını Çek Ve Doldur 
             var airports = _db.Airports
                 .Select(a => new {
                     Id = a.Id,
@@ -204,7 +240,7 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
             cmbOrigin.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
 
-            // 2. Nereye Kutusu (Context ayırarak)
+            // 2. Nereye Kutusu
             cmbDest.BindingContext = new BindingContext();
             cmbDest.DataSource = airports; // Listeyi tekrar veriyoruz
             cmbDest.DisplayMember = "FullName";
@@ -273,6 +309,7 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
 
                 var flights = query.ToList();
 
+                // Görüntülenecek Listeyi Oluştur
                 var displayList = flights.Select(f => new FlightViewModel
                 {
                     ID = f.Id,
@@ -357,16 +394,18 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
             // Seçilen satırdaki ID'yi al
             int flightId = (int)gridFlights.CurrentRow.Cells["ID"].Value;
 
-            // Veritabanından o uçuşu ve koltuklarını bul
-            var flight = _db.Flights
+            // Seçilen uçuşun bilgilerini çek
+            _selectedFlight = _db.Flights
+                .Include(f => f.DepartureAirport)
+                .Include(f => f.ArrivalAirport)
                 .Include(f => f.Airplane)
                 .ThenInclude(a => a.Seats)
                 .FirstOrDefault(f => f.Id == flightId);
 
-            if (flight != null)
+            if (_selectedFlight != null)
             {
                 // Alt bilgi panelini güncelle
-                lblSelectedFlightInfo.Text = $"{flight.FlightNumber} | {flight.DepartureAirport} -> {flight.ArrivalAirport} seçildi.";
+                lblSelectedFlightInfo.Text = $"{_selectedFlight.FlightNumber} | {_selectedFlight.DepartureAirport.Name} -> {_selectedFlight.ArrivalAirport.Name} seçildi.";
                 lblSelectedFlightInfo.ForeColor = Color.Black;
             }
         }
@@ -419,8 +458,11 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
                 // Fiyatı Hesapla
                 int occupancyCount = _db.Reservations.Count(r => r.ReservedFlight.Id == flight.Id);
 
+                // Kuponu çekiyoruz
+                string coupon = txtCouponCode.Text.Trim();
+
                 // Rezervasyon Nesnesini Oluştur
-                Reservation res = customer.MakeReservation(flight, dbSeat, occupancyCount);
+                Reservation res = customer.MakeReservation(flight, dbSeat, occupancyCount,coupon);
 
 
                 // Kaydet
@@ -430,6 +472,8 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
                 MessageBox.Show($"Rezervasyonunuz başarıyla oluşturuldu!\n\nPNR: {res.Pnr}\nKoltuk: {dbSeat.SeatNumber}\nFiyat: {res.PricePaid:C2}",
                                 "İşlem Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // Kupon kutusunu temizle
+                txtCouponCode.Clear();
                 // Ekranı Yenile
                 LoadFlights();
                 lblSelectedFlightInfo.Text = "Lütfen yukarıdan bir uçuş seçiniz...";
@@ -440,7 +484,7 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
             }
         }
 
-        private decimal CalculateListingPrice(Flight flight)
+        private decimal CalculateListingPrice(Flight flight,string couponCode = null)
         {
             // O uçuşun doluluk sayısını bul
             int filledSeats = _db.Reservations.Count(r => r.ReservedFlight.Id == flight.Id);
@@ -449,8 +493,41 @@ namespace FlightReservation.WinFormUI.Forms.CustomerForms
             PriceCalculatorEngine engine = new PriceCalculatorEngine();
             engine.AddRule(new OccupancyRule(filledSeats)); // Doluluk kuralını ekle
 
+            string coupon = txtCouponCode.Text.Trim();
+
+            // Eğer kupon girilmişse motora ekle
+            if (!string.IsNullOrEmpty(coupon))
+            {
+                engine.AddRule(new PromotionRule(coupon));
+            }
+
             // Fiyatı hesapla (Koltuk null gönderiyoruz çünkü standart fiyatı istiyoruz)
             return engine.CalculateFinalPrice(flight, null);
+        }
+
+        private void BtnApplyCoupon_Click(object sender, EventArgs e)
+        {
+            if (gridFlights.CurrentRow == null || _selectedFlight == null)
+            {
+                MessageBox.Show("Lütfen önce bir uçuş seçiniz.");
+                return;
+            }
+
+            string code = txtCouponCode.Text.Trim();
+
+            // Kuponlu yeni fiyatı hesapla
+            decimal newPrice = CalculateListingPrice(_selectedFlight, code);
+
+            // Grid'deki (tablodaki) mevcut satırın verisini al
+            var currentViewModel = (FlightViewModel)gridFlights.CurrentRow.DataBoundItem;
+
+            // Grid üzerindeki fiyat hücresini yeni (indirimli) fiyatla güncelle
+            currentViewModel.Fiyat = newPrice.ToString("C2");
+
+            // Grid'i tazeleyerek değişikliği ekranda göster
+            gridFlights.Refresh();
+
+            MessageBox.Show($"'{code}' kuponu uygulandı. Fiyat güncellendi!", "Başarılı");
         }
 
     }

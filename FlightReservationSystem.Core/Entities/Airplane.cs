@@ -25,7 +25,7 @@ namespace FlightReservation.Core.Entities
             Capacity = capacity;
             Seats = new List<Seat>();
 
-            //kapasitenin %10'u kadar business koltuk olsun
+            //kapasitenin %10'u kadar business koltuk olacak şekilde koltukları oluştur
             int businessCount = (int)(capacity * 0.10);
             //koltuk düzeni 6'şarlı olduğu için business koltuk sayısını 6'nın katına yuvarlıyoruz
             while (businessCount % 6 != 0)
@@ -35,13 +35,16 @@ namespace FlightReservation.Core.Entities
 
             for (int i = 1; i <= Capacity; i++)
             {
+                //Koltuk ismini (1A,1B vb.) hesapla
+                string formattedSeatNumber = GenerateFormattedSeatNumber(i - 1);
+
                 Seat seat;
 
                 if (i <= businessCount)
                 {
                     seat = new BusinessSeat
                     {
-                        SeatNumber = i.ToString(),
+                        SeatNumber = formattedSeatNumber,
                         Status = SeatStatus.Available,
                     };
                 }
@@ -49,13 +52,21 @@ namespace FlightReservation.Core.Entities
                 {
                     seat = new Seat
                     {
-                        SeatNumber = i.ToString(),
+                        SeatNumber = formattedSeatNumber,
                         Status = SeatStatus.Available
                     };
                 }
 
                 Seats.Add(seat);
             }
+        }
+
+        private string GenerateFormattedSeatNumber(int index)
+        {
+            int row = (index / 6) + 1;
+            int col = index % 6;
+            char letter = (char)('A' + col);
+            return $"{row}{letter}";
         }
 
     }
